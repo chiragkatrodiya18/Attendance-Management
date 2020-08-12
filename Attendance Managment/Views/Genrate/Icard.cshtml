@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Attendance_Managment.Models.Student>
+@{
+    ViewBag.Title = "Icard";
+}
+
+<h2>List of User for Genrate Icard</h2>
+<script>
+    var login = document.cookie.match("Login");
+    if (login == null) {
+        var url = '@Url.Action("Index", "Login", new { })';
+            window.location.href = url.replace();
+    }
+</script>
+<div style="margin:5%;width:90%;" id="ViewFaculty">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        var id;
+        function xyz(id) {
+            this.id = id;
+        }
+        $("body").on("submit", id, function () {
+            return confirm("Do you want to delete account of " + id + "?");
+        });
+    </script>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Class</th>
+                <th>ContactNumber</th>
+                <th>Dob</th>
+                <th>Designation</th>
+                <th>Genrate Icard</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Icard)
+            {
+                <tr>
+                    <th scope="row">@item.Id</th>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Class</td>
+                    <td>@item.ContactNumber</td>
+                    <td>@item.Dob</td>
+                    <td>@item.Option</td>
+                    <td>
+                        <input type="button" value="Genrate Icard" style="border-radius : 5px;width:70%;background-color:rgb(57, 232, 30);color:white;" onclick="location.href='@Url.Action("GenrateIcard", "Genrate",new { id = item.Id })'" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

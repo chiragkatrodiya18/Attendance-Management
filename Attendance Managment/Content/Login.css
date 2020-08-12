@@ -1,0 +1,26 @@
+﻿body {
+}
+table {
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: hidden;
+    border-radius: 7px;
+}
+.Textbox {
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 38px;
+    font-size: 16px;
+}
+.validation {
+    padding-left: 15%;
+    font-size: 16px;
+}
+img {
+    border-radius: 50%;
+    width: 105px;
+    height: 105px;
+}

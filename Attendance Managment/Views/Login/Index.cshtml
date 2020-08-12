@@ -1,0 +1,51 @@
+﻿@model Attendance_Managment.Models.Login
+@{
+    ViewBag.Title = "Login";
+}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - M</title>
+    @Styles.Render("~/Content/Login.css")
+</head>
+<body style="background-color:rgb(234,234,234);">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div style="margin-top :4%;margin-bottom : 4%;width:100%;">
+            <table align="center" style="width:400px;">
+                <tr><th style="text-align:center;padding-top:5%;font-size:34px;font-family: 'Times New Roman', Times, serif ;">Attendance Managment<hr></th></tr>
+                <tr>
+                    <td style="padding-top:10%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control Textbox", placeholder = "Admin Id", @style = "background-color:rgb(248,248,248);" } })
+                        @if (TempData["user"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.Id, "User not Exist", new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:2%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control Textbox", placeholder = "Password",required = "required", @style = "background-color:rgb(248,248,248);" })
+                        @if (TempData["password"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.Password, TempData["password"].ToString(), new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:1%;padding-bottom:5%;font-family: 'Times New Roman', Times, serif ;">
+                        <input type="submit" value="Login" class="btn btn-default" style="width:100%;margin-left:15%;background-color:rgb(56,151,250);font-size:17px;color:white;" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+</body>
+</html>

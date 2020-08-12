@@ -1,0 +1,197 @@
+﻿@model Attendance_Managment.Models.Faculty
+@{
+    ViewBag.Title = "Manage Faculty";
+}
+
+<html>
+<head>
+    <script>
+    var login = document.cookie.match("Login");
+    if (login == null) {
+        var url = '@Url.Action("Index", "Login", new { })';
+            window.location.href = url.replace();
+    }
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - M</title>
+    <script>
+        $(document).ready(function () {
+            $("#ViewFaculty").hide();
+            $("#Faculty1").click(function () {
+                $("#ViewFaculty").hide();
+                $("#AddFaculty").show();
+            });
+            $("#Faculty4").click(function () {
+                $("#AddFaculty").hide();
+                $("#ViewFaculty").show();
+            });
+            $('input[type=radio][name=Faculty]').change(function () {
+                if (this.value == 'View') {
+                    //alert($(this).val());
+                    $.get("/Faculty/ViewEmployee", null, function (data) {
+                        alert(data);
+                    });
+                }
+            });
+        });
+    </script>
+    @Styles.Render("~/Content/Login.css")
+</head>
+<body style="background-color:rgb(234,234,234);">
+    <!--<div class="navbar navbar-fixed-top" style="margin-top:4.5%;">
+        <div class="container">
+            <div class="navbar-header" style="zoom:1.4;">
+                <input type="radio" id="Faculty1" name="Faculty" checked>
+                <label for="Add Faculty">Add Faculty</label>
+                <!--<input type="radio" id="Faculty2" name="Faculty">
+    <label for="Edit Faculty">Edit Faculty</label>
+    <input type="radio" id="Faculty3" name="Faculty">
+    <label for="Remove Faculty">Remove Faculty</label>
+                <input type="radio" id="Faculty4" value="View" name="Faculty">
+                <label for="View Faculty">View Faculty</label>
+            </div>
+        </div>
+    </div>-->
+    @Html.Raw(TempData["msg"])
+
+    <div style="margin-top :3.8%;margin-bottom : 0.5%;width:100%;" id="AddFaculty">
+        @using (Html.BeginForm("AddFaculty", "Faculty", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <table align="center" style="width:400px;">
+                <tr><th style="text-align:center;padding-top:5%;font-size:34px;font-family: 'Times New Roman', Times, serif ;">Faculty Registration<hr></th></tr>
+                <tr>
+                    <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control Textbox", placeholder = "Faculty Id", @style = "background-color:rgb(248,248,248);" } })
+                        @if (TempData["user"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.Id, "User not Exist", new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control Textbox", placeholder = "Name", @style = "background-color:rgb(248,248,248);" } })
+                        @if (TempData["user"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.Name, "User not Exist", new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control Textbox", placeholder = "Email", @style = "background-color:rgb(248,248,248);" })
+                        @if (TempData["user"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.Email, "User not Exist", new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control Textbox", placeholder = "Contact Number", @style = "background-color:rgb(248,248,248);" })
+                        @if (TempData["user"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.ContactNumber, "User not Exist", new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.EditorFor(model => model.Class, new { @type = "date", htmlAttributes = new { @class = "form-control Textbox", placeholder = "Class", @style = "background-color:rgb(248,248,248);" } })
+                        @if (TempData["user"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.Class, "User not Exist", new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                        @Html.TextBoxFor(model => model.Dob, new { type = "date", @class = "form-control Textbox", placeholder = "Date of Birth", style = "background-color:rgb(248,248,248);" })
+                        @if (TempData["user"] != null)
+                        {
+                            @Html.ValidationMessageFor(model => model.Dob, "User not Exist", new { @class = "text-danger validation" })
+                        }
+                        @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger validation" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top:1%;padding-bottom:5%;font-family: 'Times New Roman', Times, serif ;">
+                        <input type="submit" value="Register Faculty" class="btn btn-default" style="width:100%;margin-left:15%;background-color:rgb(56,151,250);font-size:17px;color:white;" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <!--    <div style="margin-top :10%;margin-bottom : 4%;width:100%;" id="EditFaculty">
+            @using (Html.BeginForm("EditFaculty", "Faculty", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <table align="center" style="width:400px;">
+                    <tr><th style="text-align:center;padding-top:5%;font-size:34px;font-family: 'Times New Roman', Times, serif ;">Faculty Modify<hr></th></tr>
+                    <tr>
+                        <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control Textbox", placeholder = "Faculty Id", @style = "background-color:rgb(248,248,248);" } })
+                            @if (TempData["user"] != null)
+                            {
+                                @Html.ValidationMessageFor(model => model.Id, "User not Exist", new { @class = "text-danger validation" })
+                            }
+                            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger validation" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top:1%;padding-bottom:5%;font-family: 'Times New Roman', Times, serif ;">
+                            <input type="submit" value="Find" class="btn btn-default" style="width:100%;margin-left:15%;background-color:rgb(56,151,250);font-size:17px;color:white;" />
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+        <div style="margin-top :10%;margin-bottom : 4%;width:100%;" id="RemoveFaculty">
+            @using (Html.BeginForm("RemoveFaculty", "Faculty", FormMethod.Post, new { @id = "form1" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <table align="center" style="width:400px;">
+                    <tr><th style="text-align:center;padding-top:5%;font-size:34px;font-family: 'Times New Roman', Times, serif ;">Faculty Remove<hr></th></tr>
+                    <tr>
+                        <td style="padding-top:5%;font-family: 'Times New Roman', Times, serif ;">
+                            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control Textbox", placeholder = "Faculty Id", @style = "background-color:rgb(248,248,248);", required="required" } })
+                            @if (TempData["user"] != null)
+                            {
+                                @Html.ValidationMessageFor(model => model.Id, "User not Exist", new { @class = "text-danger validation" })
+                            }
+                            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger validation" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top:1%;padding-bottom:5%;font-family: 'Times New Roman', Times, serif ;">
+                            <input type="submit" value="Delete" id="delete" class="btn btn-default" style="width:100%;margin-left:15%;background-color:rgb(56,151,250);font-size:17px;color:white;" />
+                        </td>
+                    </tr>
+                </table>
+            }
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+            <script type="text/javascript">
+                $("body").on("submit", "#form1", function () {
+                    return confirm("Do you want to submit?");
+                });
+            </script>
+        </div>
+        -->
+</body>
+</html>
